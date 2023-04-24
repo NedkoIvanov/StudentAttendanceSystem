@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="commons/fragments::head"></head>
+<body class="bg-secondary">
+<header th:replace="commons/fragments::nav"></header>
+
+<main class="mt-3">
+  <!--  <div class="jumbotron">-->
+
+  <div class = "jumbotron bg-judge">
+    <div class="d-flex justify-content-center">
+      <div class="col-12 row d-flex justify-content-center">
+        <div th:each="g : ${allGrades}" th:object="${g}" class="mx-3">
+          <div class="card bg-secondary" style="width: 18rem;">
+
+            <div class="card-body text-center">
+              <h5 class="card-title"  >Grade</h5>
+
+              <h5 class="mt-4 mb-0"></h5>
+              <h5 class="mt-4 mb-0" th:text="*{grades}" ></h5>
+
+
+              <th:block th:if="*{mark} == 0">
+                <form th:action="@{/grades/{id}/edit(id=${g.id})}" th:method="patch" th:object="${editValue}">
+
+                  <h5 class="mt-4 mb-0">Set grade value</h5>
+                  <h5 class="mt-4 mb-0"></h5>
+                  <input th:field="*{mark}" th:error="is-invalid" type="number" step="1" class="form-control" id="date"
+                         aria-describedby="dateTimeHelpInline">
+                  <small id="dateTimeHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                    Date is in the future.
+                  </small>
+                  <h5 class="mt-4 mb-0"></h5>
+                  <button type="submit" class="btn btn-primary btn-dark">Set value</button>
+                </form>
+<!--                <a class="btn btn-secondary w-50" th:href="@{/grade/{id}/edit(id = *{id})}">Edit grade value</a>-->
+              </th:block>
+
+              <th:block th:unless="*{mark} == 0">
+                <h5 class="mt-4 mb-0">Current grade value:</h5>
+                <p class="card-text" th:text="*{mark}"></p>
+              </th:block>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- </div>-->
+</main>
+<footer>
+  <div class="container-fluid bg-judge rounded">
+    <div class="text-white p-2 text-center">&copy; CopyRight Sanity Web Design Studios 2019. All rights
+      reserved.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

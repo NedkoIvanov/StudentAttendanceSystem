@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="commons/fragments::head">
+</head>
+<body>
+<div class="container-fluid">
+    <header th:replace="commons/fragments::nav">
+    </header>
+    <main class="mt-3" >
+
+        <h1 class="text-center text-judge">Attendance Review</h1>
+        <hr class="hr-2 bg-judge">
+        <div class="d-flex justify-content-between">
+<!--            <h2 class="text-judge">Sessions name - <span th:text="${s.sessionName}"></span></h2>-->
+<!--            <h2 class="text-judge">Success Rate - 33.33 %</h2>-->
+        </div>
+        <hr class="hr-2 bg-judge">
+        <h3 class="text-judge text-center">Available students</h3>
+        <hr class="hr-2 bg-judge">
+        <table class="table table-hover text-judge">
+            <thead>
+            <tr class="row">
+                <th class="col-md-4" scope="col"><h5 class="text-center">First name</h5></th>
+                <th class="col-md-3" scope="col"><h5 class="text-center">Family name</h5></th>
+                <th class="col-md-3" scope="col"><h5 class="text-center">Email</h5></th>
+                <th class="col-md-2" scope="col"><h5 class="text-center">Set activity</h5></th>
+            </tr>
+            </thead>
+            <tbody th:each="s : ${sessionView}" th:object="${s}">
+            <tr class="row" >
+                <td class="col-md-4" scope="col"><h5 class="text-center" th:text="*{firstName}"></h5></td>
+                <td class="col-md-3" scope="col"><h5 class="text-center" th:text="*{familyName}"></h5></td>
+                <td class="col-md-3" scope="col"><h2 class="text-center" th:text="*{email}"></h2></td>
+
+                <td class="col-md-2 d-flex justify-content-around" scope="col">
+                    <div class="form-group">
+
+
+               <form th:action="@{/session/{id}/attendance(id=${s.studentId})}" th:method="patch" th:object="${setAttendance}">
+                      <select class="form-control" id="grade" name="grade">
+                             <option value="" selected>Select attendance</option>
+                             <option th:each="g : ${T(com.attendance.demo.model.entity.Enums.GradeEnum).values()}"
+                                     th:text="${g}"
+                                     th:value="${g}"
+                                     th:selected="${g} == *{grade}">
+                                </option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-dark">Set attendance</button>
+                        </form>
+
+
+
+
+
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr class="hr-2 bg-judge">
+    </main>
+    <footer>
+        <div class="container-fluid bg-judge rounded">
+            <div class="text-white p-2 text-center">&copy; CopyRight Sanity Web Design Studios 2019. All rights
+                reserved.
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
